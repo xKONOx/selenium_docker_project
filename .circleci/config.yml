@@ -25,12 +25,27 @@ jobs:
             docker pull nduythanh1/streamhg-chrome-app
 
       - run:
-          name: Run container with timeout 15 minutes
+          name: Run container with timeout 15 minutes (hard limit)
           command: |
             echo "Running job with parameter: << parameters.run_id >>"
-            timeout 15m docker run --rm \
+      
+            # Start container in background and save container ID
+            docker run -d --rm \
+              --name selenium_<< parameters.run_id >> \
               -e RUN_ID=<< parameters.run_id >> \
-              nduythanh1/selenium-chrome-app
+              nduythanh1/selenium-chrome-app > cid.txt
+      
+            CID=$(cat cid.txt)
+      
+            # Wait for up to 15 minutes (900 seconds), then kill if needed
+            (docker wait $CID & echo $! > wait_pid.txt) &
+      
+            sleep 900 && echo "Timeout reached! Killing container..." && docker kill $CID || true
+      
+            # Ensure wait finishes so CI job doesn't hang
+            wait $(cat wait_pid.txt) || true
+
+      echo "Container completed or was terminated"
       - run:
           name: Run 2 streamhg-chrome-app containers in parallel
           command: |
