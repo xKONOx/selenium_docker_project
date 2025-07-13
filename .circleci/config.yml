@@ -45,4 +45,4 @@ workflows:
       - run-docker:
           matrix:
             parameters:
-              run_id: ["job1", "job2", "job3"]
+              run_id: ["job1", "job2", "job3", "job4", "job5"]
