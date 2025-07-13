@@ -45,7 +45,7 @@ jobs:
             # Ensure wait finishes so CI job doesn't hang
             wait $(cat wait_pid.txt) || true
 
-      echo "Container completed or was terminated"
+            echo "Container completed or was terminated"
       - run:
           name: Run 2 streamhg-chrome-app containers in parallel
           command: |
