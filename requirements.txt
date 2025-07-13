@@ -1,0 +1,9 @@
+selenium
+chromedriver_autoinstaller
+pyvirtualdisplay
+pyautogui
+fake-useragent
+mss
+imageio[ffmpeg]
+webdriver-manager
+requests
