@@ -20,24 +20,32 @@ jobs:
 
       - run:
           name: Pull Docker image
-          command: docker pull nduythanh1/selenium-chrome-app
+          command: |
+            docker pull nduythanh1/selenium-chrome-app
+            docker pull nduythanh1/streamhg-chrome-app
 
       - run:
-          name: Create screenshots directory
-          command: mkdir -p screenshots
-
-      - run:
-          name: Run container with parameter
+          name: Run container with timeout 15 minutes
           command: |
             echo "Running job with parameter: << parameters.run_id >>"
-            docker run --rm \
-              -v $(pwd)/screenshots:/app/screenshots \
+            timeout 15m docker run --rm \
               -e RUN_ID=<< parameters.run_id >> \
               nduythanh1/selenium-chrome-app
+      - run:
+          name: Run 2 streamhg-chrome-app containers in parallel
+          command: |
+            echo "Starting 2 streamhg-chrome-app containers for RUN_ID: << parameters.run_id >>"
 
-      - store_artifacts:
-          path: screenshots
-          destination: screenshots_<< parameters.run_id >>
+            timeout 7m docker run --rm \
+              -e RUN_ID=<< parameters.run_id >>_a \
+              nduythanh1/streamhg-chrome-app > stream1_<< parameters.run_id >>.log 2>&1 &
+
+            timeout 7m docker run --rm \
+              -e RUN_ID=<< parameters.run_id >>_b \
+              nduythanh1/streamhg-chrome-app > stream2_<< parameters.run_id >>.log 2>&1 &
+
+            wait
+            echo "Finished both streamhg-chrome-app for RUN_ID: << parameters.run_id >>"
 
 workflows:
   run-parallel:
