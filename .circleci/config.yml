@@ -18,40 +18,40 @@ jobs:
       - setup_remote_docker:
           version: 20.10.24
 
-- run:
-    name: Pull Docker images
-    command: |
-      docker pull nduythanh1/selenium-chrome-app
-      docker pull nduythanh1/streamhg-chrome-app
-      docker pull nduythanh1/selenium-earnvids-app
-
-- run:
-    name: Run 4 containers in parallel (2 streamhg + 2 earnvids)
-    command: |
-      echo "Starting 4 containers for RUN_ID: << parameters.run_id >>"
-
-      # StreamHG A
-      timeout 7m docker run --rm \
-        -e RUN_ID=<< parameters.run_id >>_a \
-        nduythanh1/streamhg-chrome-app > stream1_<< parameters.run_id >>.log 2>&1 &
-
-      # StreamHG B
-      timeout 7m docker run --rm \
-        -e RUN_ID=<< parameters.run_id >>_b \
-        nduythanh1/streamhg-chrome-app > stream2_<< parameters.run_id >>.log 2>&1 &
-
-      # Earnvids A
-      timeout 7m docker run --rm \
-        -e RUN_ID=<< parameters.run_id >>_c \
-        nduythanh1/selenium-earnvids-app > earn1_<< parameters.run_id >>.log 2>&1 &
-
-      # Earnvids B
-      timeout 7m docker run --rm \
-        -e RUN_ID=<< parameters.run_id >>_d \
-        nduythanh1/selenium-earnvids-app > earn2_<< parameters.run_id >>.log 2>&1 &
-
-      wait
-      echo "✅ All 4 containers finished for RUN_ID: << parameters.run_id >>"
+      - run:
+          name: Pull Docker images
+          command: |
+            docker pull nduythanh1/selenium-chrome-app
+            docker pull nduythanh1/streamhg-chrome-app
+            docker pull nduythanh1/selenium-earnvids-app
+      
+      - run:
+          name: Run 4 containers in parallel (2 streamhg + 2 earnvids)
+          command: |
+            echo "Starting 4 containers for RUN_ID: << parameters.run_id >>"
+      
+            # StreamHG A
+            timeout 7m docker run --rm \
+              -e RUN_ID=<< parameters.run_id >>_a \
+              nduythanh1/streamhg-chrome-app > stream1_<< parameters.run_id >>.log 2>&1 &
+      
+            # StreamHG B
+            timeout 7m docker run --rm \
+              -e RUN_ID=<< parameters.run_id >>_b \
+              nduythanh1/streamhg-chrome-app > stream2_<< parameters.run_id >>.log 2>&1 &
+      
+            # Earnvids A
+            timeout 7m docker run --rm \
+              -e RUN_ID=<< parameters.run_id >>_c \
+              nduythanh1/selenium-earnvids-app > earn1_<< parameters.run_id >>.log 2>&1 &
+      
+            # Earnvids B
+            timeout 7m docker run --rm \
+              -e RUN_ID=<< parameters.run_id >>_d \
+              nduythanh1/selenium-earnvids-app > earn2_<< parameters.run_id >>.log 2>&1 &
+      
+            wait
+            echo "✅ All 4 containers finished for RUN_ID: << parameters.run_id >>"
 
       - run:
           name: Run container with timeout 15 minutes (hard limit)
