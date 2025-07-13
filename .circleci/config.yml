@@ -40,10 +40,9 @@ jobs:
           destination: screenshots_<< parameters.run_id >>
 
 workflows:
-  version: 2
   run-parallel:
-    matrix:
-      parameters:
-        run_id: ["job1", "job2", "job3"]
-      jobs:
-        - run-docker
+    jobs:
+      - run-docker:
+          matrix:
+            parameters:
+              run_id: ["job1", "job2", "job3"]
