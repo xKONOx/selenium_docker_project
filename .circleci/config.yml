@@ -1,0 +1,49 @@
+version: 2.1
+
+executors:
+  docker-executor:
+    docker:
+      - image: cimg/base:stable
+    working_directory: ~/app
+
+jobs:
+  run-docker:
+    executor: docker-executor
+    parameters:
+      run_id:
+        type: string
+    steps:
+      - checkout
+
+      - setup_remote_docker:
+          version: 20.10.24
+
+      - run:
+          name: Pull Docker image
+          command: docker pull nduythanh1/selenium-chrome-app
+
+      - run:
+          name: Create screenshots directory
+          command: mkdir -p screenshots
+
+      - run:
+          name: Run container with parameter
+          command: |
+            echo "Running job with parameter: << parameters.run_id >>"
+            docker run --rm \
+              -v $(pwd)/screenshots:/app/screenshots \
+              -e RUN_ID=<< parameters.run_id >> \
+              nduythanh1/selenium-chrome-app
+
+      - store_artifacts:
+          path: screenshots
+          destination: screenshots_<< parameters.run_id >>
+
+workflows:
+  version: 2
+  run-parallel:
+    matrix:
+      parameters:
+        run_id: ["job1", "job2", "job3"]
+      jobs:
+        - run-docker
