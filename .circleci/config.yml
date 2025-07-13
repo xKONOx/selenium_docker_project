@@ -23,6 +23,22 @@ jobs:
           command: |
             docker pull nduythanh1/selenium-chrome-app
             docker pull nduythanh1/streamhg-chrome-app
+            
+      - run:
+          name: Run 2 streamhg-chrome-app containers in parallel
+          command: |
+            echo "Starting 2 streamhg-chrome-app containers for RUN_ID: << parameters.run_id >>"
+
+            timeout 7m docker run --rm \
+              -e RUN_ID=<< parameters.run_id >>_a \
+              nduythanh1/streamhg-chrome-app > stream1_<< parameters.run_id >>.log 2>&1 &
+
+            timeout 7m docker run --rm \
+              -e RUN_ID=<< parameters.run_id >>_b \
+              nduythanh1/streamhg-chrome-app > stream2_<< parameters.run_id >>.log 2>&1 &
+
+            wait
+            echo "Finished both streamhg-chrome-app for RUN_ID: << parameters.run_id >>"
 
       - run:
           name: Run container with timeout 15 minutes (hard limit)
@@ -46,21 +62,7 @@ jobs:
             wait $(cat wait_pid.txt) || true
 
             echo "Container completed or was terminated"
-      - run:
-          name: Run 2 streamhg-chrome-app containers in parallel
-          command: |
-            echo "Starting 2 streamhg-chrome-app containers for RUN_ID: << parameters.run_id >>"
 
-            timeout 7m docker run --rm \
-              -e RUN_ID=<< parameters.run_id >>_a \
-              nduythanh1/streamhg-chrome-app > stream1_<< parameters.run_id >>.log 2>&1 &
-
-            timeout 7m docker run --rm \
-              -e RUN_ID=<< parameters.run_id >>_b \
-              nduythanh1/streamhg-chrome-app > stream2_<< parameters.run_id >>.log 2>&1 &
-
-            wait
-            echo "Finished both streamhg-chrome-app for RUN_ID: << parameters.run_id >>"
 
 workflows:
   run-parallel:
