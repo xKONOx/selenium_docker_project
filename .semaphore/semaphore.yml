@@ -1,29 +1,44 @@
 version: v1.0
 name: Parallel Docker Jobs
 
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu2204
+
+parameters:
+  RUN_IDS:
+    type: string[]
+    default:
+      - job1
+      - job2
+      - job3
+      - job4
+      - job5
+      - job6
+      - job7
+      - job8
+      - job9
+      - job10
+      - job11
+      - job12
+      - job13
+      - job14
+      - job15
+      - job16
+      - job17
+      - job18
+      - job19
+      - job20
+
 blocks:
   - name: Run Docker Jobs in Parallel
     task:
-      agent:
-        machine:
-          type: e1-standard-2
-          os_image: ubuntu2204
-
       jobs:
-        - name: Run Docker Containers (job1)
+        - name: Run Docker Job
           commands:
             - checkout
             - chmod +x .semaphore/run_docker.sh
-            - .semaphore/run_docker.sh job1
-
-        - name: Run Docker Containers (job2)
-          commands:
-            - checkout
-            - chmod +x .semaphore/run_docker.sh
-            - .semaphore/run_docker.sh job2
-
-        - name: Run Docker Containers (job3)
-          commands:
-            - checkout
-            - chmod +x .semaphore/run_docker.sh
-            - .semaphore/run_docker.sh job3
+            - echo "Running: ${{ parameters.RUN_IDS[SEMAPHORE_JOB_INDEX] }}"
+            - .semaphore/run_docker.sh "${{ parameters.RUN_IDS[SEMAPHORE_JOB_INDEX] }}"
+          parallelism: 20
