@@ -1,97 +1,206 @@
 version: v1.0
 name: Parallel Docker Jobs
 
-agents:
-  - queue: default
-    machine:
-      type: e1-standard-2
-      os_image: ubuntu2204
-
 blocks:
   - name: Run Docker Jobs in Parallel
     task:
-      prologue:
-        commands:
-          - checkout
-          - chmod +x .semaphore/run_docker.sh  # ✅ Thêm dòng này
-
       jobs:
         - name: Run Docker Containers (job1)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job1
 
         - name: Run Docker Containers (job2)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job2
 
         - name: Run Docker Containers (job3)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job3
 
         - name: Run Docker Containers (job4)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job4
 
         - name: Run Docker Containers (job5)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job5
 
         - name: Run Docker Containers (job6)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job6
 
         - name: Run Docker Containers (job7)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job7
 
         - name: Run Docker Containers (job8)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job8
 
         - name: Run Docker Containers (job9)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job9
 
         - name: Run Docker Containers (job10)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job10
 
         - name: Run Docker Containers (job11)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job11
 
         - name: Run Docker Containers (job12)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job12
 
         - name: Run Docker Containers (job13)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job13
 
         - name: Run Docker Containers (job14)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job14
 
         - name: Run Docker Containers (job15)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job15
 
         - name: Run Docker Containers (job16)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job16
 
         - name: Run Docker Containers (job17)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job17
 
         - name: Run Docker Containers (job18)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job18
 
         - name: Run Docker Containers (job19)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job19
 
         - name: Run Docker Containers (job20)
+          agent:
+            machine:
+              type: e1-standard-2
+              os_image: ubuntu2204
           commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
             - .semaphore/run_docker.sh job20
