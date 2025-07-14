@@ -6,31 +6,6 @@ agent:
     type: e1-standard-2
     os_image: ubuntu2204
 
-parameters:
-  RUN_IDS:
-    type: string[]
-    default:
-      - job1
-      - job2
-      - job3
-      - job4
-      - job5
-      - job6
-      - job7
-      - job8
-      - job9
-      - job10
-      - job11
-      - job12
-      - job13
-      - job14
-      - job15
-      - job16
-      - job17
-      - job18
-      - job19
-      - job20
-
 blocks:
   - name: Run Docker Jobs in Parallel
     task:
@@ -39,6 +14,10 @@ blocks:
           commands:
             - checkout
             - chmod +x .semaphore/run_docker.sh
-            - echo "Running: ${{ parameters.RUN_IDS[SEMAPHORE_JOB_INDEX] }}"
-            - .semaphore/run_docker.sh "${{ parameters.RUN_IDS[SEMAPHORE_JOB_INDEX] }}"
+            - |
+              RUN_IDS=(job1 job2 job3 job4 job5 job6 job7 job8 job9 job10 \
+                       job11 job12 job13 job14 job15 job16 job17 job18 job19 job20)
+              RUN_ID=${RUN_IDS[$SEMAPHORE_JOB_INDEX]}
+              echo "Running Docker for RUN_ID: $RUN_ID"
+              .semaphore/run_docker.sh "$RUN_ID"
           parallelism: 20
