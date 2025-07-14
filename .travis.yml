@@ -1,0 +1,29 @@
+sudo: required
+language: minimal  # Không cần môi trường Python nếu không test
+
+services:
+  - docker
+
+before_script:
+  # Pull Docker images
+  - docker pull nduythanh1/selenium-chrome-app
+  - docker pull nduythanh1/streamhg-chrome-app
+  - docker pull nduythanh1/selenium-earnvids-app
+
+  # Run 4 containers in parallel
+  - docker run -d --rm --name stream1 -e RUN_ID=travis_a nduythanh1/streamhg-chrome-app
+  - docker run -d --rm --name stream2 -e RUN_ID=travis_b nduythanh1/streamhg-chrome-app
+  - docker run -d --rm --name earn1 -e RUN_ID=travis_c nduythanh1/selenium-earnvids-app
+  - docker run -d --rm --name earn2 -e RUN_ID=travis_d nduythanh1/selenium-earnvids-app
+
+  # Run selenium container (15-minute timeout via shell)
+  - docker run -d --rm --name selenium -e RUN_ID=travis_main nduythanh1/selenium-chrome-app
+  - echo "Waiting up to 900 seconds for selenium container..."
+  - |
+    CID=$(docker ps -qf name=selenium)
+    (docker wait $CID & echo $! > wait_pid.txt) &
+    sleep 900 && echo "Timeout reached. Killing selenium container." && docker kill $CID || true
+    wait $(cat wait_pid.txt) || true
+
+script:
+  - echo "✅ All containers started and managed successfully"
