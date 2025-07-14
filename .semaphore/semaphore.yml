@@ -1,0 +1,97 @@
+version: v1.0
+name: Parallel Docker Jobs
+
+agents:
+  - queue: default
+    machine:
+      type: e1-standard-2
+      os_image: ubuntu2204
+
+blocks:
+  - name: Run Docker Jobs in Parallel
+    task:
+      prologue:
+        commands:
+          - checkout
+          - chmod +x .semaphore/run_docker.sh  # ✅ Thêm dòng này
+
+      jobs:
+        - name: Run Docker Containers (job1)
+          commands:
+            - .semaphore/run_docker.sh job1
+
+        - name: Run Docker Containers (job2)
+          commands:
+            - .semaphore/run_docker.sh job2
+
+        - name: Run Docker Containers (job3)
+          commands:
+            - .semaphore/run_docker.sh job3
+
+        - name: Run Docker Containers (job4)
+          commands:
+            - .semaphore/run_docker.sh job4
+
+        - name: Run Docker Containers (job5)
+          commands:
+            - .semaphore/run_docker.sh job5
+
+        - name: Run Docker Containers (job6)
+          commands:
+            - .semaphore/run_docker.sh job6
+
+        - name: Run Docker Containers (job7)
+          commands:
+            - .semaphore/run_docker.sh job7
+
+        - name: Run Docker Containers (job8)
+          commands:
+            - .semaphore/run_docker.sh job8
+
+        - name: Run Docker Containers (job9)
+          commands:
+            - .semaphore/run_docker.sh job9
+
+        - name: Run Docker Containers (job10)
+          commands:
+            - .semaphore/run_docker.sh job10
+
+        - name: Run Docker Containers (job11)
+          commands:
+            - .semaphore/run_docker.sh job11
+
+        - name: Run Docker Containers (job12)
+          commands:
+            - .semaphore/run_docker.sh job12
+
+        - name: Run Docker Containers (job13)
+          commands:
+            - .semaphore/run_docker.sh job13
+
+        - name: Run Docker Containers (job14)
+          commands:
+            - .semaphore/run_docker.sh job14
+
+        - name: Run Docker Containers (job15)
+          commands:
+            - .semaphore/run_docker.sh job15
+
+        - name: Run Docker Containers (job16)
+          commands:
+            - .semaphore/run_docker.sh job16
+
+        - name: Run Docker Containers (job17)
+          commands:
+            - .semaphore/run_docker.sh job17
+
+        - name: Run Docker Containers (job18)
+          commands:
+            - .semaphore/run_docker.sh job18
+
+        - name: Run Docker Containers (job19)
+          commands:
+            - .semaphore/run_docker.sh job19
+
+        - name: Run Docker Containers (job20)
+          commands:
+            - .semaphore/run_docker.sh job20
