@@ -26,4 +26,4 @@ before_script:
     wait $(cat wait_pid.txt) || true
 
 script:
-  - echo "✅ All containers started and managed successfully"
+  - echo "All containers started and managed successfully"
