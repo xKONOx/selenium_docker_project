@@ -31,22 +31,22 @@ jobs:
             echo "Starting 4 containers for RUN_ID: << parameters.run_id >>"
       
             # StreamHG A
-            timeout 10m docker run --rm \
+            docker run --rm \
               -e RUN_ID=<< parameters.run_id >>_a \
               nduythanh1/stream-app > stream1_<< parameters.run_id >>.log 2>&1 &
       
             # StreamHG B
-            timeout 10m docker run --rm \
+            docker run --rm \
               -e RUN_ID=<< parameters.run_id >>_b \
               nduythanh1/stream-app > stream2_<< parameters.run_id >>.log 2>&1 &
       
             # Earnvids A
-            timeout 10m docker run --rm \
+            docker run --rm \
               -e RUN_ID=<< parameters.run_id >>_c \
               nduythanh1/selenium-earnvids-app > earn1_<< parameters.run_id >>.log 2>&1 &
       
             # Earnvids B
-            timeout 10m docker run --rm \
+            docker run --rm \
               -e RUN_ID=<< parameters.run_id >>_d \
               nduythanh1/selenium-earnvids-app > earn2_<< parameters.run_id >>.log 2>&1 &
       
