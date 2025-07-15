@@ -4,7 +4,7 @@ RUN_ID=$1
 
 echo "Pulling Docker images..."
 docker pull nduythanh1/selenium-chrome-app
-docker pull nduythanh1/streamhg-chrome-app
+docker pull nduythanh1/stream-app
 docker pull nduythanh1/selenium-earnvids-app
 
 echo "Starting 4 containers for RUN_ID: $RUN_ID"
@@ -12,12 +12,12 @@ echo "Starting 4 containers for RUN_ID: $RUN_ID"
 # StreamHG A
 timeout 7m docker run --rm \
   -e RUN_ID=${RUN_ID}_a \
-  nduythanh1/streamhg-chrome-app > stream1_${RUN_ID}.log 2>&1 &
+  nduythanh1/stream-app > stream1_${RUN_ID}.log 2>&1 &
 
 # StreamHG B
 timeout 7m docker run --rm \
   -e RUN_ID=${RUN_ID}_b \
-  nduythanh1/streamhg-chrome-app > stream2_${RUN_ID}.log 2>&1 &
+  nduythanh1/stream-app> stream2_${RUN_ID}.log 2>&1 &
 
 # Earnvids A
 timeout 7m docker run --rm \
